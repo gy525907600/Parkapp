@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-
+import { useState } from 'react';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 import { UserForm } from '@/components/form';
@@ -10,7 +10,9 @@ const Home = () => {
   const router = useRouter();
   let siteId = router.query.siteId;
   console.log('siteId: '+siteId);
- 
+
+  const [regoNumber, setRegoNumber] = useState<any>('');
+
   return (
     <Main
       meta={
@@ -29,9 +31,9 @@ const Home = () => {
       <h1 className="text-2xl font-bold py-3 text-center text-green-700">
         Welcome to George street
       </h1>
-      <Rego />
+      <Rego regoNumber={regoNumber} setRegoNumber={setRegoNumber}/>
 
-      <UserForm />
+      <UserForm regoNumber={regoNumber}/>
     </Main>
   );
 };

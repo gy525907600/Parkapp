@@ -1,7 +1,7 @@
 import { useLocalStorage } from '@/custom-hooks/local-storage';
 import { useRouter } from 'next/router';
 
-export const Rego = () => {
+export const Rego = ({disabled, regoNumber, setRegoNumber}: any) => {
   const router = useRouter();
   // const [siteId, setSIteId ] = useState(1);
   const [rego, setRego] = useLocalStorage<string>('rego', '')
@@ -34,7 +34,7 @@ export const Rego = () => {
             <label className="absolute top-0 right-0 h-4 w-4 ">•</label>
             <label className="absolute bottom-0 right-0 h-8 w-4 ">•</label>
             <label className="absolute bottom-0 left-1 h-8 w-4 ">•</label>
-            <input type="text"
+            <input disabled={!!disabled} type="text"
               className='bg-white-400 
               uppercase 
               h-full 
@@ -43,6 +43,8 @@ export const Rego = () => {
               tracking-widest
               text-center	
               '
+              value={regoNumber}
+              onChange={(e: any) => setRegoNumber(e.target.value)}
               placeholder="ABC123" />
           </div>
         </div>

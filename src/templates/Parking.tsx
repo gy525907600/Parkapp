@@ -9,6 +9,8 @@ import { Rego } from '@/components/rego';
 const CasulParking = () => {
   const router = useRouter();
 
+  const {  type, rego } = router.query;
+
   return (
       <Main
         meta={
@@ -22,9 +24,9 @@ const CasulParking = () => {
         <h1 className="text-2xl font-bold py-3 text-center text-green-700">
           Welcome to George street
         </h1>
-        <Rego />
-  
-        <UserForm />
+        <Rego disabled={true} regoNumber={rego} dia />
+
+        <UserForm regoNumber={rego} type={type}/>
       </Main>
     );
   };

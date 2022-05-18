@@ -1,16 +1,35 @@
 import { useLocalStorage } from '@/custom-hooks/local-storage';
 import { useRouter } from 'next/router';
 
-export const UserForm = () => {
+export const UserForm = ({regoNumber}: any) => {
   const router = useRouter();
   // const [siteId, setSIteId ] = useState(1);
-  const [rego, setRego] = useLocalStorage<string>('rego','')
   const [paidHours, setPaidHours] = useLocalStorage<number>('paidHours' , 0);
-  console.log(rego);
   console.log(paidHours);
 
+  const getLocal = () => {
+    const parking: any = localStorage.getItem('parking') || ""
+    return parking ? JSON.parse(parking) : [];
+   }
 
-
+  const goParking = (type: number) => {
+    if(!regoNumber){
+        alert('please input rego number')
+        return;
+      }
+      if(type === 3) {
+        const local = getLocal();
+        const findIndex = local.findIndex((item: any) => item.rego == regoNumber);
+        if(findIndex < 0){
+          alert('Not exit rego number, please add')
+          return;
+        }
+      }
+      router.push({
+        pathname: '/parking',
+        query: { type,  rego: regoNumber}
+    })
+  }
   return (
     <div>
 
@@ -148,13 +167,15 @@ export const UserForm = () => {
         <div > Early Bird Parking is Available Now</div>
        
         <div className='flex justify-center py-4'>
-          <button className='
+          <button
+          onClick={() => goParking(1)}
+          
+           className='
           bg-green-101
           rounded-2xl 
           h-16 
           w-11/12
           mx-6
-
           font-medium 
           hover:bg-blue-700 
           hover:shadow-lg 
@@ -171,7 +192,7 @@ export const UserForm = () => {
         <div className='h-32 text-black-400'>
           <div > Casul Parking, No Time Limit</div>
           <div className='flex justify-center py-4'>
-            <button className='          
+            <button      onClick={() => goParking(2)} className='          
             bg-green-102
  
             rounded-2xl 
@@ -198,7 +219,7 @@ export const UserForm = () => {
         <div className='h-auto text-black-400'>
           <div > Already Parking Here, Ckeck or Extend The Session</div>
           <div className='flex justify-center py-4'>
-            <button className='          
+            <button      onClick={() => goParking(3)} className='          
             bg-green-103
 
             rounded-2xl 
